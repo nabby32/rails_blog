@@ -1,4 +1,14 @@
 class TagsController < ApplicationController
+	
+	before_filter :login_to_destroy, only: [:destroy]
+	def login_to_destroy
+		unless current_user
+			redirect_to articles_path
+			return false
+		end
+	end
+	
+
 	def index
 		@tags = Tag.all
 	end

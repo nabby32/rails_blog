@@ -1,6 +1,14 @@
 class ArticlesController < ApplicationController
 	include ArticlesHelper
 
+	before_filter :login_to_control, only: [:new, :create, :destroy, :edit]
+	def login_to_control
+		unless current_user
+			redirect_to articles_path
+			return false
+		end
+	end
+
 	def index
 		@articles = Article.all
 	end
